@@ -6,8 +6,8 @@ import { Cart } from './entities/cart.entity';
 import { CartItem } from '../cart-item/entities/cart-item.entity'; // Importa CartItem
 import { Order } from '../order/entities/order.entity';
 import { Branch } from '../branch/entities/branch.entity';
-import { Product } from '../product/entities/product.entity'
-import { User } from '../user/entities/user.entity'
+import { Product } from '../product/entities/product.entity';
+import { User } from '../user/entities/user.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Cart, CartItem, Order, Branch, Product, User]), // Asegúrate de incluir CartItem

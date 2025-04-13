@@ -1,4 +1,9 @@
-import { Injectable, BadRequestException, NotFoundException, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Category } from './entities/category.entity';
@@ -10,7 +15,9 @@ export class CategoryService {
   ) {}
 
   async createCategory(name: string) {
-    const existingCategory = await this.categoryRepo.findOne({ where: { name } });
+    const existingCategory = await this.categoryRepo.findOne({
+      where: { name },
+    });
     if (existingCategory) {
       throw new BadRequestException('La categoría ya existe con este nombre');
     }
@@ -20,7 +27,9 @@ export class CategoryService {
 
   async getCategoryById(categoryId: number) {
     try {
-      const category = await this.categoryRepo.findOne({ where: { id: categoryId } });
+      const category = await this.categoryRepo.findOne({
+        where: { id: categoryId },
+      });
       if (!category) {
         throw new NotFoundException('Categoría no encontrada');
       }
@@ -29,10 +38,24 @@ export class CategoryService {
       throw new InternalServerErrorException('Error al obtener la categoría');
     }
   }
-
+  async getAllCategories() {
+    try {
+      const categories: any = await this.categoryRepo.find();
+      console.log('categories', categories);
+      if (!categories) {
+        throw new BadRequestException('No existen categorías disponibles');
+      }
+      return categories;
+    } catch (error) {
+      console.log('error', error);
+      throw new InternalServerErrorException('Error al obtener las categorías');
+    }
+  }
   async deleteCategory(categoryId: number) {
     try {
-      const category = await this.categoryRepo.findOne({ where: { id: categoryId } });
+      const category = await this.categoryRepo.findOne({
+        where: { id: categoryId },
+      });
       if (!category) {
         throw new NotFoundException('Categoría no encontrada');
       }

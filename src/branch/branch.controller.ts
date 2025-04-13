@@ -3,17 +3,25 @@ import { BranchService } from './branch.service';
 
 @Controller('branches')
 export class BranchController {
-  constructor(private branchService: BranchService) {}
+  constructor(private branchService: BranchService) { }
 
   @Post(':veterinaryId')
   create(
     @Param('veterinaryId') veterinaryId: number,
-    @Body() createBranchDto: { name: string; location: string },
+    @Body()
+    createBranchDto: {
+      name: string;
+      location: string;
+      contact: string;
+      whatsappNumber: string;
+    },
   ) {
     return this.branchService.createBranch(
       veterinaryId,
       createBranchDto.name,
+      createBranchDto.contact,
       createBranchDto.location,
+      createBranchDto.whatsappNumber,
     );
   }
 

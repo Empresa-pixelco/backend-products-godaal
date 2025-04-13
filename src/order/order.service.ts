@@ -5,7 +5,7 @@ import { Order } from './entities/order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 @Injectable()
-export class OrderService {  
+export class OrderService {
   constructor(@InjectRepository(Order) private orderRepo: Repository<Order>) {}
 
   async create(createOrderDto: CreateOrderDto): Promise<Order> {
@@ -28,5 +28,4 @@ export class OrderService {
   remove(id: number) {
     return `This action removes a #${id} order`;
   }
-
 }

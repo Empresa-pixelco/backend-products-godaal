@@ -8,16 +8,30 @@ import { Veterinary } from '../veterinary/entities/veterinary.entity';
 export class BranchService {
   constructor(
     @InjectRepository(Branch) private branchRepo: Repository<Branch>,
-    @InjectRepository(Veterinary) private veterinaryRepo: Repository<Veterinary>,
-  ) {}
+    @InjectRepository(Veterinary)
+    private veterinaryRepo: Repository<Veterinary>,
+  ) { }
 
-  async createBranch(veterinaryId: number, name: string, location: string) {
-    const veterinary = await this.veterinaryRepo.findOne({ where: { id: veterinaryId } });
+  async createBranch(
+    veterinaryId: number,
+    name: string,
+    contact: string,
+    location: string,
+    whatsappNumber: string,
+  ) {
+    const veterinary = await this.veterinaryRepo.findOne({
+      where: { id: veterinaryId },
+    });
     if (!veterinary) {
       throw new Error('Veterinaria no encontrada');
     }
-
-    const branch = this.branchRepo.create({ name, location, veterinary });
+    const branch = this.branchRepo.create({
+      name,
+      location,
+      veterinary,
+      contact,
+      whatsappNumber,
+    });
     return this.branchRepo.save(branch);
   }
 

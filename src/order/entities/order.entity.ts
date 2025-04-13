@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+  Column,
+} from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 import { Branch } from '../../branch/entities/branch.entity';
 import { CartItem } from '../../cart-item/entities/cart-item.entity';
@@ -18,11 +24,11 @@ export class Order {
   items: CartItem[];
 
   @Column('decimal')
-  totalAmount: number; 
+  totalAmount: number;
 
   @Column()
-  status: string; 
+  status: string;
 
   @Column({ nullable: true })
-  whatsappMessage: string; 
+  whatsappMessage: string;
 }

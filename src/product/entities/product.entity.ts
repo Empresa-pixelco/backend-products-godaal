@@ -20,14 +20,14 @@ export class Product {
   stock: number;
 
   @Column()
-  status: string; 
+  status: string;
 
   @Column({ nullable: true })
   imageUrl: string;
 
   @ManyToOne(() => Branch, (branch) => branch.products)
   branch: Branch;
-  
+
   @ManyToOne(() => Category, (category) => category.products)
   category: Category;
 }

@@ -7,7 +7,7 @@ import { Product } from '../product/entities/product.entity';
 import { User } from '../user/entities/user.entity';
 import { Order } from '../order/entities/order.entity';
 import { Branch } from '../branch/entities/branch.entity';
-import { CreateCartDto } from './dto/create-cart.dto';  // Importa el DTO
+import { CreateCartDto } from './dto/create-cart.dto'; // Importa el DTO
 
 @Injectable()
 export class CartService {
@@ -18,15 +18,14 @@ export class CartService {
     @InjectRepository(Branch) private branchRepo: Repository<Branch>,
     @InjectRepository(Product) private productRepo: Repository<Product>,
     @InjectRepository(User) private userRepo: Repository<User>,
-
   ) {}
   async addToCart(createCartDto: CreateCartDto) {
     const { userId, productId, quantity } = createCartDto;
 
     // Buscar el usuario en el repositorio correcto
-    const user = await this.userRepo.findOne({ 
-      where: { id: userId }, 
-      relations: ['carts'] 
+    const user = await this.userRepo.findOne({
+      where: { id: userId },
+      relations: ['carts'],
     });
 
     if (!user) {
@@ -34,14 +33,16 @@ export class CartService {
     }
 
     // Buscar el producto
-    const product = await this.productRepo.findOne({ where: { id: productId } });
+    const product = await this.productRepo.findOne({
+      where: { id: productId },
+    });
 
     if (!product) {
       throw new Error('Product not found');
     }
 
     // Verificar si el usuario ya tiene un carrito
-    let cart = user.carts.length > 0 ? user.carts[0] : null; 
+    let cart = user.carts.length > 0 ? user.carts[0] : null;
 
     if (!cart) {
       // Crear un nuevo carrito si el usuario no tiene uno
@@ -64,16 +65,22 @@ export class CartService {
 
   // Generar orden a partir del carrito
   async generateOrder(userId: number, branchId: any) {
-    const cart = await this.cartRepo.findOne({ where: { user: { id: userId } }, relations: ['cartItems'] });
+    const cart = await this.cartRepo.findOne({
+      where: { user: { id: userId } },
+      relations: ['cartItems'],
+    });
     const branch = await this.branchRepo.findOne(branchId);
 
     const order = new Order();
     order.user = cart.user;
     order.branch = branch;
     order.items = cart.cartItems;
-    order.totalAmount = cart.cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+    order.totalAmount = cart.cartItems.reduce(
+      (sum, item) => sum + item.product.price * item.quantity,
+      0,
+    );
     order.status = 'pendiente';
-    
+
     await this.orderRepo.save(order);
     return order;
   }

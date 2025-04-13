@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { Veterinary } from '../../veterinary/entities/veterinary.entity';
 import { Product } from '../../product/entities/product.entity';
 import { Order } from '../../order/entities/order.entity';
@@ -16,9 +22,9 @@ export class Branch {
 
   @Column()
   location: string;
-  
+
   @Column()
-  whatsappNumber: string; 
+  whatsappNumber: string;
 
   @ManyToOne(() => Veterinary, (veterinary) => veterinary.branches)
   veterinary: Veterinary;

@@ -6,7 +6,8 @@ import { Veterinary } from './entities/veterinary.entity';
 @Injectable()
 export class VeterinaryService {
   constructor(
-    @InjectRepository(Veterinary) private veterinaryRepo: Repository<Veterinary>,
+    @InjectRepository(Veterinary)
+    private veterinaryRepo: Repository<Veterinary>,
   ) {}
 
   async createVeterinary(name: string, location: string) {

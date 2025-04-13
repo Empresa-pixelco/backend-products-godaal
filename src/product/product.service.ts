@@ -15,20 +15,18 @@ export class ProductService {
     return this.productRepo.save(product);
   }
 
-  // Obtener productos por sucursal y categoría
   async getProductsByBranchAndCategory(
-    branchId: number,
     categoryId: number,
     page = 1,
-    limit = 10
+    limit = 10,
   ) {
     return this.productRepo.find({
       where: {
-        branch: { id: branchId },
         category: { id: categoryId },
       },
       skip: (page - 1) * limit,
       take: limit,
+      relations: ['branch', 'branch.veterinary'],
     });
   }
 

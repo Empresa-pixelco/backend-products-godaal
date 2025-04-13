@@ -4,15 +4,15 @@ import { Product } from '../../product/entities/product.entity';
 
 @Entity()
 export class CartItem {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @ManyToOne(() => Cart, (cart) => cart.cartItems)
-    cart: Cart;
+  @ManyToOne(() => Cart, (cart) => cart.cartItems)
+  cart: Cart;
 
-    @ManyToOne(() => Product, (product) => product.id)
-    product: Product;
+  @ManyToOne(() => Product, (product) => product.id)
+  product: Product;
 
-    @Column()
-    quantity: number; // Cantidad del producto en el carrit
+  @Column()
+  quantity: number;
 }
